@@ -11,7 +11,7 @@ const Home =() =>{
 
     useEffect(()=>{
       fetchUser()
-    },)
+    },[])
 
     const handleLogout=(user)=>{
         setLoading(true)
@@ -24,7 +24,7 @@ const Home =() =>{
 
     return(
         <div  className='mt-16'>
-        {/* <Body/> */}
+        <Body/>
         </div>
     )
  }

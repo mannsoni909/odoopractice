@@ -226,7 +226,7 @@ app.post('/fetchUserDetails',async (req,res)=>{
     var email = req.body.user
     // console.log(req.body)
     try{
-        var result = await db.query('SELECT * FROM user_details where email = $1 ',[email])
+        var result = await db.query('SELECT * FROM userdetails where email = $1 ',[email])
         // console.log(result)
         if(result.rows.length != 0){
             res.status(200).json({message :'Successful','result':result.rows[0]})
@@ -243,18 +243,20 @@ app.post('/fetchUserDetails',async (req,res)=>{
 
 app.post('/updateUser',async(req,res)=>{
     const newData = req.body
-    const {username,email,phone,address} = newData.updatedUserDetails
+    const {username,email,phone,address,profilePic} = newData
     console.log(newData)
+
     try{
             var result= await db.query(`
-            UPDATE userDetails
+            UPDATE userdetails
             SET 
                 username = $1,
                 phone = $2,
-                address = $3
+                address = $3,
+                profilepic=$4
             WHERE 
-                email = $4;
-        `,[username,phone,address,email])
+                email = $5;
+        `,[username,phone,address,profilePic,email])
         console.log("Values updated")
         console.log(result.rowCount)
         res.status(200).json({message:'Successful'})
@@ -263,10 +265,9 @@ app.post('/updateUser',async(req,res)=>{
         console.log(error)
         res.status(201).json({message:"Some error occurred"})
     }
-
-    res.send()
-    
+    res.send()  
 })
+
 
 
 

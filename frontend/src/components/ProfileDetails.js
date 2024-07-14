@@ -19,16 +19,16 @@ function ProfileDetails() {
     const preset_key ="profile"
     const cloud_name ="dwrnhptyt"
 
-    // useEffect(() => {
-    //     handleOnRender()
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
+    useEffect(() => {
+        handleOnRender()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-    // const handleOnRender = async()=>{
-    //     await fetchUser();
-    //     console.log("USERS FETCHED BY FETCHUSER")
-    //     handleFormEditing();
-    // }
+    const handleOnRender = async()=>{
+        await fetchUser();
+        console.log("USERS FETCHED BY FETCHUSER")
+        handleFormEditing();
+    }
 
     const handleFormEditing = async () => {
         console.log("HANDLE FORM EDITING CALLED ")
@@ -101,10 +101,7 @@ function ProfileDetails() {
             profilePic: formData.profilePic
         }
 
-        console.log(1000001)
-        console.log(profile)
-        console.log(updatedUserDetails)
-        console.log(formData)
+
         
         try {
             const response = await axios.post('http://localhost:5000/updateUser', updatedUserDetails);
