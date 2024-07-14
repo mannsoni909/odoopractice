@@ -1,10 +1,17 @@
-import { useContext} from 'react';
+import { useContext, useEffect} from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../contexts/UserContext';
+import Body from './Body';
 
 const Home =() =>{
     const { user,logout,loading,setLoading,ClipLoader } = useContext(AuthContext);
+    const {userDetails,fetchUser} = useContext(UserContext)
     const navigate=useNavigate()
+
+    useEffect(()=>{
+      fetchUser()
+    },)
 
     const handleLogout=(user)=>{
         setLoading(true)
@@ -16,15 +23,8 @@ const Home =() =>{
     }
 
     return(
-        <div>
-            {loading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
-          <ClipLoader size={150} color={"#4A90E2"} loading={loading} />
-        </div>
-      )}
-        <h1 className="text-center text-black ">Welcome to Home Page !!</h1>
-        {user ? <h1>Email : {user}</h1> : <h1>PLEASE LOGIN FIRST</h1>}
-        <button onClick={handleLogout}>LOGOUT</button>
+        <div  className='mt-16'>
+        {/* <Body/> */}
         </div>
     )
  }

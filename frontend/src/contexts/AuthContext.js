@@ -9,6 +9,7 @@ const EXPIRY_TIME = 24*60*60*100; // 1 day expiry
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isLoggedIn,setIsLoggedIn] = useState(false)
 
   const setWithExpiry = (key, value, ttl) => {
     const now = new Date();
@@ -46,6 +47,7 @@ export const AuthProvider = ({ children }) => {
   // Function to log in the user
   const login = (email) => {
     setUser(email);
+    setIsLoggedIn(true)
     setWithExpiry('userEmail', email, EXPIRY_TIME);
   };
 
@@ -68,7 +70,7 @@ export const AuthProvider = ({ children }) => {
 
 
   return (
-    <AuthContext.Provider value={{ user, login, logout,loading,setLoading,ClipLoader }}>
+    <AuthContext.Provider value={{ user, login, logout,loading,setLoading,ClipLoader,setIsLoggedIn,isLoggedIn }}>
       {children}
     </AuthContext.Provider>
   );

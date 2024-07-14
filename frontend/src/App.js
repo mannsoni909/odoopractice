@@ -6,16 +6,18 @@ import Login from './components/Login';
 import Home from './components/Home';
 import Layout from './components/Layout';
 import Profile from './components/Profile';
+import Contact from './components/Contact';
 
 
 function App() {
   return (
     <Router>
       <Routes>
-          <Route path='/' element={<Login/>}></Route>
-          <Route path='/signup' element={<Signup/>}></Route>
           <Route element={<Layout/>}>
-            <Route path='/home' element={<Home/>}></Route>
+            <Route path='/' element={<Home/>}></Route>
+          <Route path='/login' element={<Login/>}></Route>
+          <Route path='/signup' element={<Signup/>}></Route>
+            <Route path='/contact' element={<Contact/>}></Route>
             <Route path='/profile' element={<Profile/>}></Route>
           </Route>
       </Routes>

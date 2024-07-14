@@ -5,6 +5,7 @@ export const UserContext = createContext()
 
 export const UserContextProvider = ({children}) => {
     const [userDetails,setUserDetails] = useState(null)
+    const [role,setRole] = useState('No role')
     // const {user} = useContext(AuthContext)
 
     const fetchUser =async ()=>{
@@ -26,7 +27,7 @@ export const UserContextProvider = ({children}) => {
     }
 
     return (
-        <UserContext.Provider value={{userDetails,setUserDetails,fetchUser}}>
+        <UserContext.Provider value={{userDetails,setUserDetails,fetchUser,role,setRole}}>
         {children}
         </UserContext.Provider>
     )

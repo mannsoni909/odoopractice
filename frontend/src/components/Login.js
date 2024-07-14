@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'; // Assuming you use React 
 import { z } from 'zod';
 // import { ClipLoader } from 'react-spinners';
 import { AuthContext } from '../contexts/AuthContext';
+import { UserContext } from '../contexts/UserContext';
 
 
 // Define your Zod schema
@@ -18,11 +19,13 @@ const Login = () => {
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false); // State to manage password visibility
   const navigate = useNavigate();
-  const { user,login,loading,setLoading,ClipLoader } = useContext(AuthContext);
+  const { user,login,loading,setLoading,ClipLoader,setIsLoggedIn ,isLoggedIn} = useContext(AuthContext);
+  const {setRole} = useContext(UserContext)
+
   
-  if (user){
-    navigate("/home")
-  }
+  // if (user){
+  //   navigate("/")
+  // }
 
   const handleLogin = async () => {
     try {
@@ -30,13 +33,18 @@ const Login = () => {
       loginSchema.parse({ email, password });
 
       setLoading(true);
-      const response = await axios.post('http://localhost:5000/', { email, password });
+      const response = await axios.post('http://localhost:5000/login', { email, password });
 
       if (response.data.message === 'Successful') {
         login(email);
+        setIsLoggedIn(true)
+        
+        setRole(response.data.role)
+        console.log(isLoggedIn);
         setTimeout(() => {
           setLoading(false); // Stop the spinner
-          navigate('/home');
+          navigate('/');
+        
         }, 800);
       } else {
         setTimeout(() => {
@@ -56,7 +64,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-orange-200">
        {loading && (
         <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
           <ClipLoader size={150} color={"#4A90E2"} loading={loading} />
@@ -78,7 +86,7 @@ const Login = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-orange-700 focus:border-orange-700 sm:text-sm"
               placeholder="Email address"
             />
           </div>
@@ -94,7 +102,7 @@ const Login = () => {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-orange-700 focus:border-orange-700 sm:text-sm"
               placeholder="Password"
             />
             <button
@@ -118,7 +126,7 @@ const Login = () => {
             <button
               onClick={handleLogin}
               type="submit"
-              className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm"
+              className="w-full bg-orange-600 text-white py-2 px-4 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-700 focus:ring-offset-2 sm:text-sm"
             >
               Login
             </button>
@@ -128,7 +136,7 @@ const Login = () => {
         <div className="mt-4 text-center">
           <p>
             Don't have an account?{' '}
-            <Link to="/signup" className="font-medium text-indigo-600 hover:text-indigo-500">
+            <Link to="/signup" className="font-medium text-orange-700 hover:text-orange-500">
               SignUp
             </Link>
           </p>
