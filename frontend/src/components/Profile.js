@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import ProfileDetails from './ProfileDetails';
 import MyBooks from './MyBooks';
 import { UserContext } from '../contexts/UserContext';
 import LibrarianFeatures from './LibrarianFeatures';
 import AddLibrarian from './AdminFeatures';
+import { AuthContext } from '../contexts/AuthContext';
 
 const books = [
     {
@@ -20,6 +21,13 @@ const books = [
 ];
 
 function Profile() {
+    const {fetchUser}= useContext(UserContext)
+    const {login,user}=useContext(AuthContext)
+
+    useEffect(()=>{
+        login(user)
+        fetchUser()
+    },[])
 
     const {role} = useContext(UserContext)
 

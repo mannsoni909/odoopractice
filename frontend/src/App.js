@@ -7,6 +7,8 @@ import Home from './components/Home';
 import Layout from './components/Layout';
 import Profile from './components/Profile';
 import Contact from './components/Contact';
+import Body from './components/Body';
+import ReadMore from './components/ReadMore';
 
 
 function App() {
@@ -19,6 +21,9 @@ function App() {
           <Route path='/signup' element={<Signup/>}></Route>
             <Route path='/contact' element={<Contact/>}></Route>
             <Route path='/profile' element={<Profile/>}></Route>
+          <Route path="/readmore/:id" 
+            element={<ReadMore/>} >
+          </Route>
           </Route>
       </Routes>
     </Router>

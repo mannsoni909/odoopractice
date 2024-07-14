@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import axios from 'axios';
+import { AuthContext } from '../contexts/AuthContext';
 
 function ProfileDetails() {
     const { userDetails, fetchUser } = useContext(UserContext);
@@ -16,6 +17,7 @@ function ProfileDetails() {
     const [profilePicPreview, setProfilePicPreview] = useState('');
     const CLOUDINARY_URL= 'https://res.cloudinary.com/dwrnhptyt/image/upload/v1720894434/'
 
+
     const preset_key ="profile"
     const cloud_name ="dwrnhptyt"
 
@@ -23,6 +25,14 @@ function ProfileDetails() {
         handleOnRender()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    // const {fetchUser}= useContext(UserContext)
+    const {login,user}=useContext(AuthContext)
+
+    useEffect(()=>{
+        login(user)
+        // fetchUser()
+    },[])
 
     const handleOnRender = async()=>{
         await fetchUser();
